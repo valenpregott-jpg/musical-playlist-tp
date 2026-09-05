@@ -1,0 +1,9 @@
+# Informe del Proyecto — Biblioteca Musical
+
+## 1. Elección del Tema
+Elegimos el tema Biblioteca Musical porque nos permite estructurar adecuadamente colecciones de canciones, listas de reproducción e historiales de reproducción.  Las entidades principales tienen atributos claros como título, artista, álbum y duración.
+
+## 2. Justificación de Tipos Utilizados (Mutabilidad e Inmutabilidad)
+- **Catálogo (`list`):** Es una estructura mutable. La utilizamos para almacenar el catálogo general porque en entregas posteriores realizaremos modificaciones.
+- **Atributos de las canciones (`str`, `int`):** Los usamos para los datos individuales de cada canción (título, artista, álbum y duración). Son inmutables, lo que evita que la información de una canción se modifique por error..
+- **Registros individuales (`dict`):** Cada canción es un diccionario. Lo usamos porque nos permite guardar los datos organizados por nombre, como "titulo" o "artista".
