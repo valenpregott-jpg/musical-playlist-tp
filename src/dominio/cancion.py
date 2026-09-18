@@ -1,55 +1,40 @@
-CATALOGO = [
-    {
-        "id": 1,
-        "titulo": "Hola Remix",
-        "artista": "Dalex, Rauw Alejandro, Lenny Tavarez, Chencho Corleone",
-        "album": "Climaxxx",
-        "duracion_seg": 288
-    },
-    {
-        "id": 2,
-        "titulo": "China",
-        "artista": "Anuel AA, Daddy Yankee, Karol G, Ozuna, J Balvin",
-        "album": "Emmanuel",
-        "duracion_seg": 301
-    },
-    {
-        "id": 3,
-        "titulo": "La Canción",
-        "artista": "J Balvin, Bad Bunny",
-        "album": "OASIS",
-        "duracion_seg": 242
-    },
-    {
-        "id": 4,
-        "titulo": "512",
-        "artista": "Mora, Jhay Cortez",
-        "album": "MicroDosis",
-        "duracion_seg": 193
-    },
-    {
-        "id": 5,
-        "titulo": "911 Remix",
-        "artista": "Sech, Jhay Cortez",
-        "album": "42",
-        "duracion_seg": 215
-    }
-]
+"""Entidad del catálogo: una canción de la biblioteca musical."""
 
-def obtener_catalogo():
-    return CATALOGO
 
-def formatear_duracion(segundos):
-    minutos = segundos // 60
-    seg = segundos % 60
-    return f"{minutos}m {seg:02d}s"
+class Cancion:
+    """Una canción del catálogo.
 
-def listar_catalogo():
-    print("\n" + "=" * 60)
-    print("         🎵 BIBLIOTECA MUSICAL - CATÁLOGO 🎵")
-    print("=" * 60)
-    for cancion in CATALOGO:
-        duracion = formatear_duracion(cancion['duracion_seg'])
-        print(f"[{cancion['id']:>2}] {cancion['titulo']} - {cancion['artista']}")
-        print(f"     Álbum: {cancion['album']} | Duración: {duracion}")
-        print("-" * 60)
+    El id es la identidad del registro y no cambia (inmutable por criterio
+    del grupo). El resto de los atributos son mutables: se pueden corregir
+    si algún dato vino mal cargado.
+    """
+
+    def __init__(self, id, titulo, artista, album, genero, anio, duracion_seg):
+        self._id = id
+        self.titulo = titulo
+        self.artista = artista
+        self.album = album
+        self.genero = genero
+        self.anio = anio
+        self.duracion_seg = duracion_seg
+
+    @property
+    def id(self):
+        return self._id
+
+    def duracion_formateada(self):
+        minutos = self.duracion_seg // 60
+        segundos = self.duracion_seg % 60
+        return f"{minutos}m {segundos:02d}s"
+
+    def linea_corta(self):
+        return f"[{self.id:>2}] {self.titulo} - {self.artista}"
+
+    def detalle(self):
+        return (
+            f"     Álbum: {self.album} | Género: {self.genero} | "
+            f"Año: {self.anio} | Duración: {self.duracion_formateada()}"
+        )
+
+    def __str__(self):
+        return self.linea_corta()
