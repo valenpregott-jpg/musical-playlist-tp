@@ -1,8 +1,19 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 
+# --- NUEVOS IMPORTS E3 ---
+from src.dominio.playlist import Playlist
+from src.tads.pila import Pila
+from src.tads.cola import Cola
+from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
+
 biblioteca = Biblioteca()
 biblioteca.cargar_datos_iniciales()
+
+# --- INSTANCIAS E3 ---
+playlist = Playlist(tope=6)
+historial = Pila()
+cola_reproduccion = Cola()
 
 
 def mostrar_menu():
@@ -10,6 +21,11 @@ def mostrar_menu():
     print("1. Listar catálogo de canciones")
     print("2. Ver detalle de una canción")
     print("5. Ver versiones derivadas de una canción (remix/cover)")
+    # --- NUEVAS OPCIONES E3 ---
+    print("6. Agregar a la Playlist (Colección con tope)")
+    print("7. Listar Playlist")
+    print("8. Encolar y Reproducir siguiente (Cola FIFO)")
+    print("9. Deshacer última acción (Pila LIFO)")
     print("0. Salir")
 
 
@@ -79,12 +95,58 @@ def main():
             ver_detalle()
         elif opcion == "5":
             ver_versiones_derivadas()
+            
+        # --- LÓGICA E3 ---
+        elif opcion == "6":
+            id_cancion = pedir_id("\nId de la canción a agregar: ")
+            if id_cancion is not None:
+                cancion = biblioteca.buscar_por_id(id_cancion)
+                if cancion:
+                    try:
+                        playlist.agregar(cancion.titulo)
+                        historial.apilar(f"Se agregó '{cancion.titulo}' a la playlist")
+                        print(f"✅ Agregada a la Playlist: {cancion.titulo}")
+                    except ColeccionLlenaError as e:
+                        print(f"❌ Error: {e}")
+                else:
+                    print(f"❌ No existe una canción con id {id_cancion}.")
+                    
+        elif opcion == "7":
+            print("\n--- Mi Playlist ---")
+            if playlist.esta_vacia():
+                print("La playlist está vacía.")
+            else:
+                for tema in playlist:
+                    print(f" 🎵 {tema}")
+                    
+        elif opcion == "8":
+            id_cancion = pedir_id("\nId de la canción para encolar: ")
+            if id_cancion is not None:
+                cancion = biblioteca.buscar_por_id(id_cancion)
+                if cancion:
+                    cola_reproduccion.encolar(cancion.titulo)
+                    print(f"✅ Encolada en la fila: {cancion.titulo}")
+                    try:
+                        tema = cola_reproduccion.desencolar()
+                        historial.apilar(f"Se reprodujo '{tema}' desde la cola")
+                        print(f"▶️ Reproduciendo turno de cola: {tema}")
+                    except ColaVaciaError as e:
+                        print(f"❌ Error: {e}")
+                else:
+                    print(f"❌ No existe una canción con id {id_cancion}.")
+                    
+        elif opcion == "9":
+            try:
+                accion = historial.desapilar()
+                print(f"↩️ Deshacer: {accion}")
+            except PilaVaciaError as e:
+                print(f"❌ Error: {e}")
+                
         elif opcion == "0":
             print("\n¡Gracias por usar la Biblioteca Musical! Hasta luego.")
             break
         else:
             print("\n❌ Opción no válida. Por favor, intente de nuevo.")
-
 
 if __name__ == "__main__":
     main()
