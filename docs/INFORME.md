@@ -86,3 +86,13 @@ Para evitar fallos en la aplicación, se establecieron límites de capacidad y u
 * **`PilaVaciaError` y `ColaVaciaError`:** Saltan cuando se intenta quitar o reproducir un elemento pero la estructura no tiene canciones guardadas.
 
 El menú principal captura estas excepciones mediante bloques `try / except`, mostrándole un aviso claro al usuario en la consola sin cerrar el programa.
+
+### 3. Tabla de operaciones e invariante
+
+| TAD | Operaciones | Invariante |
+| --- | --- | --- |
+| `Nodo` | `dato`, `siguiente` | El último nodo de cualquier cadena siempre tiene `siguiente = None`. |
+| `ListaEnlazada` | `esta_vacia()`, `tamanio()`, `insertar_al_inicio()`, `insertar_al_final()`, `buscar()`, `eliminar()`, `__iter__()` | `_tamanio` siempre coincide con la cantidad real de nodos alcanzables desde `_cabeza`. Si `_cabeza is None`, `_tamanio == 0`. |
+| `Pila` | `apilar()`, `desapilar()`, `ver_tope()`, `esta_vacia()` | El tope de la pila es siempre la cabeza de la `ListaEnlazada` interna (se apila/desapila por `insertar_al_inicio`). |
+| `Cola` | `encolar()`, `desencolar()`, `ver_frente()`, `esta_vacia()` | El frente de la cola es siempre la cabeza de la `ListaEnlazada` interna; lo nuevo entra siempre por el final (`insertar_al_final`). |
+| `Playlist` | `agregar()`, `esta_vacia()`, `__iter__()` | La cantidad de canciones (`_canciones.tamanio()`) nunca supera `_tope` (6). |
