@@ -72,16 +72,17 @@ Versiones derivadas de «Hola Remix»:
 
 ## 4.  Estructuras de Datos Propias y Manejo de Excepciones (E3)
 
-### 1. Estructura de Datos Elegida
-Para el manejo del catálogo y la playlist se implementó una **`ListaEnlazada`** propia basada en nodos (`Nodo`), evitando el uso de las listas nativas de Python (`list`). 
+### 1. Estructuras de Datos Utilizadas
+Para gestionar las canciones y la playlist, implementamos nuestras propias estructuras en lugar de las listas nativas de Python:
 
-* **Iterador:** La clase `ListaEnlazada` implementa los métodos mágicos `__iter__` y `__next__`, lo que permite recorrer la playlist e imprimir las canciones de forma limpia utilizando bucles `for`.
-* **Pila (LIFO):** La clase `Pila` utiliza internamente `ListaEnlazada` para gestionar el historial de acciones y permitir la funcionalidad de deshacer (`Deshacer última acción`).
-* **Cola (FIFO):** La clase `Cola` utiliza internamente `ListaEnlazada` para encolar canciones y reproducirlas en orden de llegada.
+* **ListaEnlazada:** Organiza los elementos mediante nodos encadenados. Incluye un iterador para recorrer la colección de manera sencilla con bucles `for`.
+* **Pila (Historial / Deshacer):** Funciona bajo el esquema LIFO (último en entrar, primero en salir). Se utiliza para registrar las acciones del usuario y permitir deshacer la última realizada.
+* **Cola (Cola de Reproducción):** Funciona bajo el esquema FIFO (primero en entrar, primero en salir). Permite encolar canciones y reproducirlas en el orden exacto en que fueron agregadas.
 
-### 2. Colección con Tope y Excepciones
-La `Playlist` posee un límite/tope máximo de elementos. Cuando se intenta superar dicho límite o se opera sobre estructuras vacías, el sistema lanza excepciones personalizadas heredadas de `Exception` (definidas en `src/excepciones.py`):
-* `ColeccionLlenaError`: Se dispara al intentar agregar una canción cuando la playlist alcanzó su capacidad máxima.
-* `PilaVaciaError` y `ColaVaciaError`: Se disparan al intentar desapilar o desencolar cuando no hay elementos disponibles.
+### 2. Control de Capacidad y Excepciones Personalizadas
+Para evitar fallos en la aplicación, se establecieron límites de capacidad y un control estricto de errores mediante clases de excepción propias (en `src/excepciones.py`):
 
-Todas estas excepciones son capturadas en `main.py` mediante bloques `try / except` para informar adecuadamente al usuario por consola sin interrumpir la ejecución del programa.
+* **`ColeccionLlenaError`:** Salta si se intenta agregar un tema cuando la playlist alcanzó su capacidad máxima.
+* **`PilaVaciaError` y `ColaVaciaError`:** Saltan cuando se intenta quitar o reproducir un elemento pero la estructura no tiene canciones guardadas.
+
+El menú principal captura estas excepciones mediante bloques `try / except`, mostrándole un aviso claro al usuario en la consola sin cerrar el programa.
