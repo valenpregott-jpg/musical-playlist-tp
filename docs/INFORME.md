@@ -68,3 +68,20 @@ Salida por pantalla (opción 5 del menú, id 1):
 Versiones derivadas de «Hola Remix»:
   (ninguna: esta canción no tiene versiones)
 ```
+
+
+## 4.  Estructuras de Datos Propias y Manejo de Excepciones (E3)
+
+### 1. Estructura de Datos Elegida
+Para el manejo del catálogo y la playlist se implementó una **`ListaEnlazada`** propia basada en nodos (`Nodo`), evitando el uso de las listas nativas de Python (`list`). 
+
+* **Iterador:** La clase `ListaEnlazada` implementa los métodos mágicos `__iter__` y `__next__`, lo que permite recorrer la playlist e imprimir las canciones de forma limpia utilizando bucles `for`.
+* **Pila (LIFO):** La clase `Pila` utiliza internamente `ListaEnlazada` para gestionar el historial de acciones y permitir la funcionalidad de deshacer (`Deshacer última acción`).
+* **Cola (FIFO):** La clase `Cola` utiliza internamente `ListaEnlazada` para encolar canciones y reproducirlas en orden de llegada.
+
+### 2. Colección con Tope y Excepciones
+La `Playlist` posee un límite/tope máximo de elementos. Cuando se intenta superar dicho límite o se opera sobre estructuras vacías, el sistema lanza excepciones personalizadas heredadas de `Exception` (definidas en `src/excepciones.py`):
+* `ColeccionLlenaError`: Se dispara al intentar agregar una canción cuando la playlist alcanzó su capacidad máxima.
+* `PilaVaciaError` y `ColaVaciaError`: Se disparan al intentar desapilar o desencolar cuando no hay elementos disponibles.
+
+Todas estas excepciones son capturadas en `main.py` mediante bloques `try / except` para informar adecuadamente al usuario por consola sin interrumpir la ejecución del programa.
