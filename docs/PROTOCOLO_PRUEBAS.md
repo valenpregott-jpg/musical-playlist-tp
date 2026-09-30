@@ -23,4 +23,4 @@ Cómo arrancar el programa: desde la raíz del repo, `python -m src.main`.
 | P11 | E3 | Opción `6` (agregar a playlist) hasta superar el tope de 6 | 7 canciones cargadas | Muestra cartel de error "ColeccionLlenaError" al querer meter la 7ma canción | pasa | Colección con tope |
 | P12 | E3 | Opción `7` (listar playlist) | playlist con canciones | Recorre y muestra los temas usando el iterador propio de ListaEnlazada | pasa | Iterador |
 | P13 | E3 | Opción `8` (encolar/desencolar) con la cola vacía | cola sin temas | Lanza y captura ColaVaciaError sin romper la app | pasa | Cola FIFO |
-| P14 | E3 | Opción `9` (deshacer) con el historial vacío | pila vacía | Lanza y captura PilaVaciaError indicando que no hay acciones para deshacer | pasa | Pila LIFO |
+| P14 | E3 | Opción `9` (deshacer) con el historial vacío | pila vacía | Lanza y captura PilaVaciaError indicando que no hay acciones para deshacer. | pasa | Pila LIFO |
