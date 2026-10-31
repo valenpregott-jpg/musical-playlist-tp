@@ -1,3 +1,6 @@
+    from src.algoritmos.busqueda import busqueda_lineal, busqueda_binaria
+from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
+
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 
@@ -85,6 +88,9 @@ def ver_versiones_derivadas():
 
 
 def main():
+    catalogo_ordenado = False
+    criterio_orden_actual = None
+
     while True:
         mostrar_menu()
         opcion = input("\nSeleccione una opción: ").strip()
@@ -93,6 +99,80 @@ def main():
             listar_catalogo()
         elif opcion == "2":
             ver_detalle()
+        
+        # --- OPCIÓN 3: BUSCAR CANCIÓN (E4 - Ítems 4.1 y 4.2) ---
+        elif opcion == "3":
+            print("\n--- BÚSQUEDA EN EL CATÁLOGO ---")
+            print("1. Búsqueda Lineal (por Título)")
+            print("2. Búsqueda Binaria (por Título - Requiere catálogo ordenado por Título)")
+            
+            sub_opcion = input("Seleccione tipo de búsqueda (1/2): ").strip()
+            
+            if sub_opcion == "1":
+                # Búsqueda lineal propia
+                titulo_buscar = input("Ingrese el título de la canción a buscar: ").strip()
+                resultado = busqueda_lineal(biblioteca.canciones, titulo_buscar, obtener_clave=lambda c: c.titulo)
+                
+                if resultado:
+                    print(f"\n¡Canción encontrada!: {resultado}")
+                else:
+                    print(f"\nNo se encontró ninguna canción con el título '{titulo_buscar}'.")
+                    
+            elif sub_opcion == "2":
+                # Búsqueda binaria propia
+                if not catalogo_ordenado or criterio_orden_actual != "titulo":
+                    print("\n[AVISO] El catálogo no está ordenado por Título.")
+                    print("Ordenando automáticamente por Título (Inserción) para poder ejecutar la búsqueda binaria...")
+                    biblioteca.canciones = ordenar_insercion(biblioteca.canciones, obtener_clave=lambda c: c.titulo)
+                    catalogo_ordenado = True
+                    criterio_orden_actual = "titulo"
+                
+                titulo_buscar = input("Ingrese el título de la canción a buscar: ").strip()
+                resultado = busqueda_binaria(biblioteca.canciones, titulo_buscar, obtener_clave=lambda c: c.titulo)
+                
+                if resultado:
+                    print(f"\n¡Canción encontrada (vía Búsqueda Binaria)!: {resultado}")
+                else:
+                    print(f"\nNo se encontró ninguna canción con el título '{titulo_buscar}'.")
+            else:
+                print("Opción no válida.")
+
+        # --- OPCIÓN 4: ORDENAR CATÁLOGO (E4 - Ítem 4.3) ---
+        elif opcion == "4":
+            print("\n--- ORDENAR CATÁLOGO ---")
+            print("Criterios disponibles:")
+            print("1. Por Título")
+            print("2. Por Artista")
+            criterio_sel = input("Seleccione el criterio (1/2): ").strip()
+            
+            if criterio_sel == "1":
+                obtener_clave = lambda c: c.titulo
+                criterio_nombre = "titulo"
+            elif criterio_sel == "2":
+                obtener_clave = lambda c: c.artista
+                criterio_nombre = "artista"
+            else:
+                print("Criterio inválido.")
+                continue
+
+            print("\nAlgoritmo de ordenamiento:")
+            print("1. Selección (O(n^2) - No estable)")
+            print("2. Inserción (O(n^2) - Estable)")
+            algo_sel = input("Seleccione algoritmo (1/2): ").strip()
+
+            if algo_sel == "1":
+                biblioteca.canciones = ordenar_seleccion(biblioteca.canciones, obtener_clave)
+                catalogo_ordenado = True
+                criterio_orden_actual = criterio_nombre
+                print(f"\nCatálogo ordenado por {criterio_nombre} utilizando Ordenamiento por Selección.")
+            elif algo_sel == "2":
+                biblioteca.canciones = ordenar_insercion(biblioteca.canciones, obtener_clave)
+                catalogo_ordenado = True
+                criterio_orden_actual = criterio_nombre
+                print(f"\nCatálogo ordenado por {criterio_nombre} utilizando Ordenamiento por Inserción.")
+            else:
+                print("Algoritmo inválido.")
+
         elif opcion == "5":
             ver_versiones_derivadas()
             
@@ -150,3 +230,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
