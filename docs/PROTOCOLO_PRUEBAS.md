@@ -24,3 +24,7 @@ Cómo arrancar el programa: desde la raíz del repo, `python -m src.main`.
 | P12 | E3 | Opción `7` (listar playlist) | playlist con canciones | Recorre y muestra los temas usando el iterador propio de ListaEnlazada | pasa | Iterador |
 | P13 | E3 | Opción `8` (encolar/desencolar) con la cola vacía | cola sin temas | Lanza y captura ColaVaciaError sin romper la app | pasa | Cola FIFO |
 | P14 | E3 | Opción `9` (deshacer) con el historial vacío | pila vacía | Lanza y captura PilaVaciaError indicando que no hay acciones para deshacer. | pasa | Pila LIFO |
+| **P09** | Búsqueda lineal de un nombre que existe | Lo encuentra y lo muestra correctamente | PASA |
+| **P10** | Búsqueda lineal de un nombre que no existe | Muestra "no encontrado", sin traceback | PASA |
+| **P11** | Búsqueda binaria con catálogo desordenado | Avisa o reordena; no da falso no encontrado | PASA |
+| **P12** | Ordenar por un criterio y luego por otro | El orden de la colección cambia correctamente | PASA |

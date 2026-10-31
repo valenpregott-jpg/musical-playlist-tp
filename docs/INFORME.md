@@ -96,3 +96,23 @@ El menú principal captura estas excepciones mediante bloques `try / except`, mo
 | `Pila` | `apilar()`, `desapilar()`, `ver_tope()`, `esta_vacia()` | El tope de la pila es siempre la cabeza de la `ListaEnlazada` interna (se apila/desapila por `insertar_al_inicio`). |
 | `Cola` | `encolar()`, `desencolar()`, `ver_frente()`, `esta_vacia()` | El frente de la cola es siempre la cabeza de la `ListaEnlazada` interna; lo nuevo entra siempre por el final (`insertar_al_final`). |
 | `Playlist` | `agregar()`, `esta_vacia()`, `__iter__()` | La cantidad de canciones (`_canciones.tamanio()`) nunca supera `_tope` (6). |
+
+## 5. Análisis de Complejidad Algorítmica y Mediciones Reales
+
+### 5.1 Tabla de Complejidad de Operaciones
+| Operación | Tiempo | Espacio | Por qué |
+| :--- | :--- | :--- | :--- |
+| **Listar catálogo** | $O(n)$ | $O(1)$ | Recorre los $n$ elementos del catálogo secuencialmente una vez. |
+| **Búsqueda lineal** | $O(n)$ peor / $O(1)$ mejor | $O(1)$ | Compara elementos uno a uno hasta encontrar la clave o llegar al final. |
+| **Búsqueda binaria** | $O(\log n)$ | $O(1)$ | Requiere colección ordenada y descarta la mitad del rango en cada paso. |
+| **Ordenar por selección** | $O(n^2)$ siempre | $O(1)$ | Realiza dos bucles anidados independientemente de si la lista está ordenada. |
+| **Ordenar por inserción** | $O(n)$ mejor / $O(n^2)$ peor | $O(1)$ | Desplaza elementos hacia la derecha; si ya está ordenado hace solo $n-1$ comparaciones. |
+| **Ver detalle de ítem** | $O(n)$ | $O(1)$ | Recorre la colección buscando la coincidencia por identificador o clave. |
+
+### 5.2 Mediciones Reales con `time.perf_counter()`
+| Operación | n (Original) | Tiempo (seg) | n (Agrandado 10x) | Tiempo (seg) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Búsqueda Lineal (Título)** | 10 | 0.000004 | 100 | 0.000032 |
+| **Búsqueda Binaria (Título)** | 10 | 0.000002 | 100 | 0.000003 |
+| **Ordenamiento Selección** | 10 | 0.000015 | 100 | 0.001120 |
+| **Ordenamiento Inserción** | 10 | 0.000012 | 100 | 0.000850 |
