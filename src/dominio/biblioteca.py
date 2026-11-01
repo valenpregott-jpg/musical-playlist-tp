@@ -43,6 +43,17 @@ class Biblioteca:
         for fila in _DATOS_VERSIONES:
             self._versiones.append(fila)
 
+    @property
+    def canciones(self):
+        """Acceso directo a la colección interna (E4: búsqueda/ordenamiento
+        necesitan poder leerla y, en el caso del ordenamiento, reemplazarla
+        por la versión ya ordenada)."""
+        return self._canciones
+
+    @canciones.setter
+    def canciones(self, valor):
+        self._canciones = valor
+
     def cantidad(self):
         return len(self._canciones)
 

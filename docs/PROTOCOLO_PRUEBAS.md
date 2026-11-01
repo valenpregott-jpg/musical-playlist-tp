@@ -24,3 +24,7 @@ Cómo arrancar el programa: desde la raíz del repo, `python -m src.main`.
 | P12 | E3 | Opción `7` (listar playlist) | playlist con canciones | Recorre y muestra los temas usando el iterador propio de ListaEnlazada | pasa | Iterador |
 | P13 | E3 | Opción `8` (encolar/desencolar) con la cola vacía | cola sin temas | Lanza y captura ColaVaciaError sin romper la app | pasa | Cola FIFO |
 | P14 | E3 | Opción `9` (deshacer) con el historial vacío | pila vacía | Lanza y captura PilaVaciaError indicando que no hay acciones para deshacer. | pasa | Pila LIFO |
+| P15 | E4 | Opción `3` → `1` (búsqueda lineal) de un título que existe | título = `Hola` | Encuentra la canción y la muestra | pasa | Búsqueda lineal propia |
+| P16 | E4 | Opción `3` → `1` (búsqueda lineal) de un título que no existe | título = `No Existe` | Muestra "No se encontró ninguna canción...", sin traceback | pasa | Búsqueda lineal propia |
+| P17 | E4 | Opción `3` → `2` (búsqueda binaria) con el catálogo todavía sin ordenar | título = `Hola` | Avisa que no está ordenado, reordena por título (inserción) y después busca sin dar falso "no encontrado" | pasa | Cumple regla dura 4.2 |
+| P18 | E4 | Opción `4`: ordenar por Artista con Selección, y luego por Título con Inserción | catálogo cargado | El orden de `biblioteca.canciones` cambia correctamente con cada criterio/algoritmo | pasa | Sin `sorted`/`list.sort` |
