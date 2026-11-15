@@ -116,3 +116,11 @@ El menú principal captura estas excepciones mediante bloques `try / except`, mo
 | **Búsqueda Binaria (Título)** | 10 | 0.000002 | 100 | 0.000003 |
 | **Ordenamiento Selección** | 10 | 0.000015 | 100 | 0.001120 |
 | **Ordenamiento Inserción** | 10 | 0.000012 | 100 | 0.000850 |
+
+
+## 6. Persistencia (E5)
+
+- **Texto simple (`.txt`)**: Se implementaron `cargar_texto` y `guardar_texto` en `src/persistencia/texto.py` usando `pathlib.Path` anclado a la raíz del proyecto (`Path(__file__).resolve().parents[2] / "data"`). Lee `data/canciones.txt` y `data/versiones.txt` de forma secuencial ($O(n)$) devolviendo diccionarios por fila y lanzando `ArchivoInvalidoError` si el archivo no existe o la cantidad de columnas no coincide con el encabezado.
+- **Layout del registro binario**: `struct.Struct("<I 30s 25s 30s 12s 2H")` = **105 bytes** por registro (`id` `I` 4B, `titulo` `30s` 30B, `artista` `25s` 25B, `album` `30s` 30B, `genero` `12s` 12B, `anio` `H` 2B, `duracion_seg` `H` 2B). Las cadenas se codifican en UTF-8 recortadas al ancho fijo y rellenadas con `\x00`.
+- **Header binario**: `struct.Struct("<4s 1s I")` = **9 bytes** (`magia` `b"AYED"` 4B, `tema` `b"M"` 1B, `cantidad` `I` 4B). Al cargar se valida tamaño mínimo, magia y tema, lanzando `ArchivoInvalidoError` ante archivos truncados o corruptos.
+- **Acceso directo y ABM**: `actualizar_registro` calcula el desplazamiento exacto con `seek(HEADER.size + posicion * FORMATO.size)` y sobrescribe únicamente ese registro ($O(1)$) en modo `"r+b"`. El alta (`alta_binario`) hace *append* al final (`seek(0, 2)`) y actualiza la cantidad en el header; la baja (`baja_binario`) reescribe los registros restantes sin huecos y actualiza el header.

@@ -28,3 +28,6 @@ Cómo arrancar el programa: desde la raíz del repo, `python -m src.main`.
 | **P10** | Búsqueda lineal de un nombre que no existe | Muestra "no encontrado", sin traceback | PASA |
 | **P11** | Búsqueda binaria con catálogo desordenado | Avisa o reordena; no da falso no encontrado | PASA |
 | **P12** | Ordenar por un criterio y luego por otro | El orden de la colección cambia correctamente | PASA |
+| **P13** | Guardar catálogo en `.txt` (`9b`), salir del programa, volver a entrar y listar (`1`) | Los datos modificados o dados de alta persisten tras reiniciar el programa | PASA |
+| **P14** | Guardar `.bin` (`9c`), modificar canción por ID (`6b`), recargar `.bin` (`9d`) y listar (`1`) | El registro se actualiza por posición (`seek`) y refleja el nuevo valor al recargar | PASA |
+| **P15** | Intentar cargar un archivo corrupto o basura (`9e` con `basura.bin`) | Lanza `ArchivoInvalidoError` con mensaje claro y el menú continúa sin traceback | PASA |

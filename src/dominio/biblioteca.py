@@ -1,8 +1,5 @@
-"""Catálogo de canciones y relación recursiva de versiones (covers/remixes).
+"""Catálogo de canciones y relación recursiva de versiones (covers/remixes)."""
 
-En E1 y E2 el catálogo se arma a mano en el código. Los .txt de data/ se
-empiezan a leer recién en E5 (no se tocan hasta esa entrega).
-"""
 
 from src.dominio.cancion import Cancion
 
@@ -90,3 +87,63 @@ class Biblioteca:
             resultado.append(id_version)
             resultado += self.versiones_de(id_version)
         return resultado
+
+
+# --- MÉTODOS DE PERSISTENCIA Y ABM (E5) ---
+
+    def __iter__(self):
+        return iter(self._canciones)
+
+    def cargar_desde_filas(self, filas_canciones, filas_versiones=None):
+        """Reemplaza el catálogo en memoria con dicts leídos de .txt."""
+        self._canciones = []
+        for fila in filas_canciones:
+            self._canciones.append(Cancion(
+                id=int(fila["id"]),
+                titulo=fila["titulo"],
+                artista=fila["artista"],
+                album=fila["album"],
+                genero=fila["genero"],
+                anio=int(fila["anio"]),
+                duracion_seg=int(fila["duracion_seg"]),
+            ))
+        if filas_versiones is not None:
+            self._versiones = []
+            for fila in filas_versiones:
+                self._versiones.append((
+                    int(fila["cancion_id"]),
+                    int(fila["version_de_id"]),
+                    fila["tipo"],
+                ))
+
+    def reemplazar_canciones(self, lista_canciones):
+        """Reemplaza las canciones en memoria (ej: al cargar binario o reordenar)."""
+        self._canciones = list(lista_canciones)
+
+    def a_filas_dict(self):
+        """Convierte las canciones en lista de dicts para guardar_texto."""
+        return [
+            {
+                "id": c.id,
+                "titulo": c.titulo,
+                "artista": c.artista,
+                "album": c.album,
+                "genero": c.genero,
+                "anio": c.anio,
+                "duracion_seg": c.duracion_seg,
+            }
+            for c in self._canciones
+        ]
+
+    def posicion_de(self, id_cancion):
+        """Devuelve el índice 0-based de la canción con ese id, o None."""
+        for idx, cancion in enumerate(self._canciones):
+            if cancion.id == id_cancion:
+                return idx
+        return None
+
+    def agregar_cancion(self, cancion):
+        self._canciones.append(cancion)
+
+    def eliminar_en_posicion(self, posicion):
+        del self._canciones[posicion]

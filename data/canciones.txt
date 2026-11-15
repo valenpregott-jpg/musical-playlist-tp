@@ -1,0 +1,8 @@
+id,titulo,artista,album,genero,anio,duracion_seg
+1,Hola Remix,Dalex - Rauw Alejandro - Lenny Tavarez - Chencho Corleone,Climaxxx,Urbano,2019,288
+2,China,Anuel AA - Daddy Yankee - Karol G - Ozuna - J Balvin,Emmanuel,Urbano,2019,301
+3,La Cancion,J Balvin - Bad Bunny,Oasis,Urbano,2019,242
+4,512,Mora - Jhay Cortez,MicroDosis,Urbano,2020,193
+5,911 Remix,Sech - Jhay Cortez,42,Urbano,2021,215
+6,Hola,Dalex,Climaxxx,Urbano,2019,210
+7,911,Sech,42,Urbano,2021,198
