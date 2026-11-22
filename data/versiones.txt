@@ -1,0 +1,3 @@
+cancion_id,version_de_id,tipo
+1,6,remix
+5,7,remix
