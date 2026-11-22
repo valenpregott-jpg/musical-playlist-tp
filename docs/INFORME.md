@@ -130,14 +130,6 @@ El menú principal captura estas excepciones mediante bloques `try / except`, mo
 
 El desarrollo del proyecto se distribuyó entre los tres integrantes del Grupo 32 de forma colaborativa a lo largo de las seis entregas:
 
-## 7. Reparto de Trabajo (E6)
-
-El desarrollo del proyecto se distribuyó entre los tres integrantes del Grupo 32 de forma colaborativa a lo largo de las seis entregas:
-
-## 7. Reparto de Trabajo (E6)
-
-El desarrollo del proyecto se distribuyó entre los tres integrantes del Grupo 32 de forma colaborativa a lo largo de las seis entregas:
-
 
 | Integrante | Módulos y Tareas Principales |
 | --- | --- |
